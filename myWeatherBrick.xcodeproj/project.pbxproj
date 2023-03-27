@@ -88,6 +88,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		430EB18429D1E2310004163E /* Applications */ = {
+			isa = PBXGroup;
+			children = (
+				4390C09A29BBB36B0013A23C /* AppDelegate.swift */,
+				4390C09C29BBB36B0013A23C /* SceneDelegate.swift */,
+			);
+			path = Applications;
+			sourceTree = "<group>";
+		};
+		430EB18529D1E24C0004163E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4390C09E29BBB36B0013A23C /* WeatherViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		4330AAD129BCF52E002EDCC9 /* Weather Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,7 +138,9 @@
 		4390C09929BBB36B0013A23C /* myWeatherBrick */ = {
 			isa = PBXGroup;
 			children = (
+				430EB18429D1E2310004163E /* Applications */,
 				43E793FF29BF10F5000CDC54 /* View */,
+				430EB18529D1E24C0004163E /* Controllers */,
 				4330AAD129BCF52E002EDCC9 /* Weather Managers */,
 				4390C0A329BBB3730013A23C /* Assets.xcassets */,
 				4390C0CA29BBB4F50013A23C /* support */,
@@ -150,8 +169,6 @@
 			isa = PBXGroup;
 			children = (
 				4390C0CB29BBB67A0013A23C /* Fonts */,
-				4390C09A29BBB36B0013A23C /* AppDelegate.swift */,
-				4390C09C29BBB36B0013A23C /* SceneDelegate.swift */,
 				4390C0A029BBB36B0013A23C /* Main.storyboard */,
 				4390C0A529BBB3730013A23C /* LaunchScreen.storyboard */,
 				4390C0A829BBB3730013A23C /* Info.plist */,
@@ -171,7 +188,6 @@
 		43E793FF29BF10F5000CDC54 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4390C09E29BBB36B0013A23C /* WeatherViewController.swift */,
 				438F0B0F29BDD0850023B654 /* InfoView.swift */,
 			);
 			path = View;
