@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4330AACE29BCDC0B002EDCC9 /* WeatherFetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330AACD29BCDC0B002EDCC9 /* WeatherFetchManager.swift */; };
-		4330AAD029BCE25C002EDCC9 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4330AACF29BCE25C002EDCC9 /* Weather.swift */; };
 		438F0B1029BDD0850023B654 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438F0B0F29BDD0850023B654 /* InfoView.swift */; };
 		4390C09B29BBB36B0013A23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390C09A29BBB36B0013A23C /* AppDelegate.swift */; };
 		4390C09D29BBB36B0013A23C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390C09C29BBB36B0013A23C /* SceneDelegate.swift */; };
@@ -43,7 +42,6 @@
 
 /* Begin PBXFileReference section */
 		4330AACD29BCDC0B002EDCC9 /* WeatherFetchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherFetchManager.swift; sourceTree = "<group>"; };
-		4330AACF29BCE25C002EDCC9 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		438F0B0F29BDD0850023B654 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		4390C09729BBB36B0013A23C /* myWeatherBrick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myWeatherBrick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4390C09A29BBB36B0013A23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,10 +86,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		430EB18429D1E2310004163E /* Applications */ = {
+			isa = PBXGroup;
+			children = (
+				4390C09A29BBB36B0013A23C /* AppDelegate.swift */,
+				4390C09C29BBB36B0013A23C /* SceneDelegate.swift */,
+			);
+			path = Applications;
+			sourceTree = "<group>";
+		};
+		430EB18529D1E24C0004163E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4390C09E29BBB36B0013A23C /* WeatherViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		4330AAD129BCF52E002EDCC9 /* Weather Managers */ = {
 			isa = PBXGroup;
 			children = (
-				4330AACF29BCE25C002EDCC9 /* Weather.swift */,
 				4390C0D029BBC51E0013A23C /* WeatherData.swift */,
 				4330AACD29BCDC0B002EDCC9 /* WeatherFetchManager.swift */,
 			);
@@ -121,9 +135,10 @@
 		4390C09929BBB36B0013A23C /* myWeatherBrick */ = {
 			isa = PBXGroup;
 			children = (
+				430EB18429D1E2310004163E /* Applications */,
 				43E793FF29BF10F5000CDC54 /* View */,
+				430EB18529D1E24C0004163E /* Controllers */,
 				4330AAD129BCF52E002EDCC9 /* Weather Managers */,
-				4390C0A329BBB3730013A23C /* Assets.xcassets */,
 				4390C0CA29BBB4F50013A23C /* support */,
 			);
 			path = myWeatherBrick;
@@ -149,9 +164,8 @@
 		4390C0CA29BBB4F50013A23C /* support */ = {
 			isa = PBXGroup;
 			children = (
+				4390C0A329BBB3730013A23C /* Assets.xcassets */,
 				4390C0CB29BBB67A0013A23C /* Fonts */,
-				4390C09A29BBB36B0013A23C /* AppDelegate.swift */,
-				4390C09C29BBB36B0013A23C /* SceneDelegate.swift */,
 				4390C0A029BBB36B0013A23C /* Main.storyboard */,
 				4390C0A529BBB3730013A23C /* LaunchScreen.storyboard */,
 				4390C0A829BBB3730013A23C /* Info.plist */,
@@ -171,7 +185,6 @@
 		43E793FF29BF10F5000CDC54 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4390C09E29BBB36B0013A23C /* WeatherViewController.swift */,
 				438F0B0F29BDD0850023B654 /* InfoView.swift */,
 			);
 			path = View;
@@ -314,7 +327,6 @@
 				4330AACE29BCDC0B002EDCC9 /* WeatherFetchManager.swift in Sources */,
 				4390C09B29BBB36B0013A23C /* AppDelegate.swift in Sources */,
 				4390C0D129BBC51E0013A23C /* WeatherData.swift in Sources */,
-				4330AAD029BCE25C002EDCC9 /* Weather.swift in Sources */,
 				4390C09D29BBB36B0013A23C /* SceneDelegate.swift in Sources */,
 				438F0B1029BDD0850023B654 /* InfoView.swift in Sources */,
 			);

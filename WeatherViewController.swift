@@ -5,14 +5,20 @@ import CoreLocation
 
 class WeatherViewController: UIViewController {
     
-    let fetchManager = FetchWeatherManager()
-    let locationManager = CLLocationManager()
-    let backgroundImageView = UIImageView()
-    let scrollView = UIScrollView()
-    let contentView = UIView()
-    var stack = UIStackView()
+    private let fetchManager = FetchWeatherManager()
+    private let locationManager = CLLocationManager()
+    private let backgroundImageView = UIImageView()
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+    private let activityIndicator = UIActivityIndicatorView()
+    private let infoButton = UIButton()
+    private let findButton = UIButton()
+    private let gpsButton = UIButton()
+    private let imageViewBrickOnRope = UIImageView()
+    private let refreshControl = UIRefreshControl()
+    private var stack = UIStackView()
     
-    let cityNameLabel : UILabel = {
+    private let cityNameLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 22)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -20,7 +26,7 @@ class WeatherViewController: UIViewController {
         return label
     }()
     
-    let temperatureLabel : UILabel = {
+    private let temperatureLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 60)
         label.textAlignment = .right
@@ -29,7 +35,7 @@ class WeatherViewController: UIViewController {
         return label
     }()
     
-    let degreeLabel : UILabel = {
+    private let degreeLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 50)
         label.textAlignment = .left
@@ -37,21 +43,15 @@ class WeatherViewController: UIViewController {
         return label
     }()
     
-    let infoButton = UIButton()
-    let findButton = UIButton()
-    
-    let descriptionWeatherLabel : UILabel = {
+    private let descriptionWeatherLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 28)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    let imageViewBrickOnRope = UIImageView()
-    let refreshControl = UIRefreshControl()
-    var latitude: Double = 0
-    var longitude: Double = 0
-    var activityIndicator = UIActivityIndicatorView()
     
+    private var latitude: Double = 0
+    private var longitude: Double = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,16 +65,16 @@ class WeatherViewController: UIViewController {
         setupButtom()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        refresh()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        refreshWeather()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         NSLayoutConstraint.activate([
             temperatureLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            temperatureLabel.topAnchor.constraint(equalTo: imageViewBrickOnRope.bottomAnchor),
+            temperatureLabel.topAnchor.constraint(equalTo: view.centerYAnchor),
             
             degreeLabel.leadingAnchor.constraint(equalTo: temperatureLabel.trailingAnchor, constant: 10),
             degreeLabel.topAnchor.constraint(equalTo: temperatureLabel.topAnchor, constant: -10),
@@ -85,34 +85,26 @@ class WeatherViewController: UIViewController {
             descriptionWeatherLabel.topAnchor.constraint(equalTo: temperatureLabel.bottomAnchor, constant: 10),
             descriptionWeatherLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-//            cityNameLabel.widthAnchor.constraint(equalToConstant: 200),
-//            cityNameLabel.bottomAnchor.constraint(equalTo: infoButton.topAnchor, constant: -15),
-//            cityNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            cityNameLabel.heightAnchor.constraint(equalToConstant: 30),
-            
-            infoButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            infoButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             infoButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             infoButton.widthAnchor.constraint(equalToConstant: 160),
             infoButton.heightAnchor.constraint(equalToConstant: 60),
             
             stack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             stack.bottomAnchor.constraint(equalTo: infoButton.topAnchor, constant: -15)
-            
         ])
     }
-    func setupButtom(){
-        contentView.addSubview(infoButton)
-        infoButton.layer.cornerRadius = 15
-        infoButton.translatesAutoresizingMaskIntoConstraints = false
-        infoButton.setTitle("INFO", for: .normal)
-        infoButton.backgroundColor = .systemOrange
-        infoButton.addTarget(self, action: #selector(pushPopView), for: .touchUpInside)
-        
-        findButton.setImage(UIImage(named: "icon_search"), for: .normal)
-        findButton.addTarget(self, action: #selector(pushFindButton), for: .touchUpInside)
+    
+    @objc private func didPullToRefresh() {
+        refreshWeather()
+        refreshControl.endRefreshing()
     }
     
-    @objc func pushFindButton(){
+    @objc private func refreshGps(){
+        refreshWeather()
+    }
+    
+    @objc private func pushFindButton(){
         
         let alert = UIAlertController(title: "Find City", message: "Enter city name on English:", preferredStyle: .alert)
        
@@ -121,7 +113,6 @@ class WeatherViewController: UIViewController {
             DispatchQueue.main.async {
                 self.activityIndicator.startAnimating()
             }
-            print("_______------___----_City!!!! = \(city)")
             self.fetchManager.fetchWeatherForCityName(cityName: city) { weather in
                 DispatchQueue.main.async {
                     self.updateView(weather: weather)
@@ -129,6 +120,7 @@ class WeatherViewController: UIViewController {
                 }
             }
         }
+        
         let cancel = UIAlertAction(title: "Cancel", style: .destructive)
         
         alert.addTextField { textField in
@@ -139,46 +131,60 @@ class WeatherViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    @objc func pushPopView(){
+    @objc private func pushPopView(){
         let infoView = InfoView()
         view.addSubview(infoView)
     }
     
-    func setupView(){
+    private func setupButtom(){
+        contentView.addSubview(infoButton)
+        infoButton.layer.cornerRadius = 15
+        infoButton.translatesAutoresizingMaskIntoConstraints = false
+        infoButton.setTitle("INFO", for: .normal)
+        infoButton.backgroundColor = .systemOrange
+        infoButton.addTarget(self, action: #selector(pushPopView), for: .touchUpInside)
+        
+        gpsButton.setImage(UIImage(named: "icon_location"), for: .normal)
+        findButton.setImage(UIImage(named: "icon_search"), for: .normal)
+        gpsButton.addTarget(self, action: #selector(refreshGps), for: .touchUpInside)
+        findButton.addTarget(self, action: #selector(pushFindButton), for: .touchUpInside)
+    }
+
+    private func setupView(){
         view.addSubview(backgroundImageView)
         backgroundImageView.image = UIImage(named: "image_background")
         backgroundImageView.frame = view.bounds
-        contentView.addSubview(temperatureLabel)
-        contentView.addSubview(cityNameLabel)
-        contentView.addSubview(degreeLabel)
-        contentView.addSubview(descriptionWeatherLabel)
+        view.addSubview(temperatureLabel)
+        view.addSubview(cityNameLabel)
+        view.addSubview(degreeLabel)
+        view.addSubview(descriptionWeatherLabel)
         setupStack()
     }
     
-    func setupStack(){
+    private func setupStack(){
         let gpsImage = UIImageView(image: UIImage(named: "icon_location"))
         gpsImage.contentMode = .scaleAspectFit
-        stack = UIStackView(arrangedSubviews: [gpsImage,cityNameLabel,findButton])
+        stack = UIStackView(arrangedSubviews: [gpsButton,cityNameLabel,findButton])
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
         stack.spacing = 5
         contentView.addSubview(stack)
     }
     
-    func setupViewBrickOnRope(){
+    private func setupViewBrickOnRope(){
         contentView.addSubview(imageViewBrickOnRope)
         imageViewBrickOnRope.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2)
         imageViewBrickOnRope.contentMode = .scaleAspectFit
         imageViewBrickOnRope.image = UIImage()
     }
     
-    func setupActivityIndicator(){
+    private func setupActivityIndicator(){
         contentView.addSubview(activityIndicator)
         activityIndicator.frame = CGRect(x: contentView.frame.width/2, y: contentView.frame.height/2, width: 0, height: 0)
         activityIndicator.style = .large
     }
     
-    func setupScrollView(){
+    private func setupScrollView(){
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         scrollView.frame = view.bounds
@@ -186,21 +192,13 @@ class WeatherViewController: UIViewController {
         scrollView.contentSize = contentView.frame.size
     }
     
-    func setupRefreshControl(){
+    private func setupRefreshControl(){
         scrollView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
     }
     
-    @objc func didPullToRefresh() {
-        locationManager.startUpdatingLocation()
-        print("start location")
-        refresh()
-        refreshControl.endRefreshing()
-    }
-    
-    func startLocationManager(){
+    private func startLocationManager(){
         locationManager.requestWhenInUseAuthorization()
-        
         DispatchQueue.global().async {
             if CLLocationManager.locationServicesEnabled() {
                 self.locationManager.delegate = self
@@ -216,7 +214,8 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    func refresh(){
+    private func refreshWeather(){
+        guard longitude != 0 else {return}
         DispatchQueue.main.async {
             self.activityIndicator.startAnimating()
         }
@@ -224,15 +223,11 @@ class WeatherViewController: UIViewController {
             DispatchQueue.main.async {
                 self.updateView(weather: weather)
                 self.activityIndicator.stopAnimating()
-                DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 5){
-                    print("Stop location")
-                    self.locationManager.stopUpdatingLocation()
-                }
             }
         }
     }
     
-    func updateView(weather: FinalWeather?){
+    private func updateView(weather: FinalWeather?){
         if let weather = weather {
             temperatureLabel.text = weather.temperature
             cityNameLabel.text = weather.country + ", " + weather.nameCity
@@ -240,13 +235,7 @@ class WeatherViewController: UIViewController {
             degreeLabel.text = "°"
             imageViewBrickOnRope.image = UIImage(named: weather.image)
             windOfBrick(windSpeed: weather.wind)
-            
-            if (701...799).contains(weather.id) {
-                imageViewBrickOnRope.alpha = 0.15
-            } else {
-                imageViewBrickOnRope.alpha = 1.0
-            }
-            
+            setupFogView(idFog: weather.id)
         } else {
             temperatureLabel.text = ""
             cityNameLabel.text = "Not found"
@@ -259,15 +248,23 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    func windOfBrick(windSpeed: Double){
-        print("windSpeed = \(windSpeed)")
-        if windSpeed > 4 {
+    private func setupFogView(idFog: Int){
+        if (701...799).contains(idFog) {
+            imageViewBrickOnRope.alpha = 0.15
+        } else {
+            imageViewBrickOnRope.alpha = 1.0
+        }
+    }
+    
+    private func windOfBrick(windSpeed: Double){
+        if windSpeed > 5 {
             UIView.animate(withDuration: 2, delay: 1) {
-                self.imageViewBrickOnRope.transform = CGAffineTransformMakeRotation(CGFloat(45))
+                self.imageViewBrickOnRope.transform = CGAffineTransformMakeRotation(CGFloat(0.8))
             }
         } else {
             UIView.animate(withDuration: 2, delay: 1) {
                 self.imageViewBrickOnRope.transform = CGAffineTransformMakeRotation(CGFloat(0))
+               
             }
         }
     }
@@ -280,9 +277,9 @@ extension WeatherViewController: CLLocationManagerDelegate {
         if let lastLocation = locations.last {
             latitude = lastLocation.coordinate.latitude
             longitude = lastLocation.coordinate.longitude
-            refresh()
         }
     }
 }
+
 
 
