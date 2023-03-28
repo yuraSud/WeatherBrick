@@ -245,6 +245,10 @@ class WeatherViewController: UIViewController {
             UIView.animate(withDuration: 2, delay: 1) {
                 self.imageViewBrickOnRope.transform = CGAffineTransformMakeRotation(CGFloat(0))
             }
+            let alertNotFound = UIAlertController(title: "City not find", message: "Try input another City\nPlease!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .cancel)
+            alertNotFound.addAction(action)
+            present(alertNotFound, animated: true)
         }
     }
     
@@ -258,8 +262,8 @@ class WeatherViewController: UIViewController {
     
     private func windOfBrick(windSpeed: Double){
         if windSpeed > 5 {
-            UIView.animate(withDuration: 2, delay: 1) {
-                self.imageViewBrickOnRope.transform = CGAffineTransformMakeRotation(CGFloat(0.8))
+            UIView.animate(withDuration: 3, delay: 1.5, options: [.repeat, .autoreverse, .curveEaseInOut]) {
+                self.imageViewBrickOnRope.transform = CGAffineTransformMakeRotation(CGFloat(0.3))
             }
         } else {
             UIView.animate(withDuration: 2, delay: 1) {
