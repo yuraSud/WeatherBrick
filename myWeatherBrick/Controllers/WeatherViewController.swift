@@ -15,7 +15,7 @@ class WeatherViewController: UIViewController {
     private let findButton = UIButton()
     private let gpsButton = UIButton()
     private let imageViewBrickOnRope = UIImageView()
-    private let refreshControl = UIRefreshControl()
+//    private let refreshControl = UIRefreshControl()
     private var stack = UIStackView()
     
     private let cityNameLabel : UILabel = {
@@ -60,7 +60,7 @@ class WeatherViewController: UIViewController {
         setupView()
         setupViewBrickOnRope()
         startLocationManager()
-        setupRefreshControl()
+//        setupRefreshControl()
         setupActivityIndicator()
         setupButtom()
     }
@@ -95,10 +95,10 @@ class WeatherViewController: UIViewController {
         ])
     }
     
-    @objc private func didPullToRefresh() {
-        refreshWeather()
-        refreshControl.endRefreshing()
-    }
+//    @objc private func didPullToRefresh() {
+//        refreshWeather()
+//        refreshControl.endRefreshing()
+//    }
     
     @objc private func refreshGps(){
         refreshWeather()
@@ -173,7 +173,7 @@ class WeatherViewController: UIViewController {
     
     private func setupViewBrickOnRope(){
         contentView.addSubview(imageViewBrickOnRope)
-        imageViewBrickOnRope.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height/2)
+        imageViewBrickOnRope.frame = CGRect(x: 0, y: 10, width: view.frame.width, height: view.frame.height/2.5)
         imageViewBrickOnRope.contentMode = .scaleAspectFit
         imageViewBrickOnRope.image = UIImage()
     }
@@ -185,17 +185,26 @@ class WeatherViewController: UIViewController {
     }
     
     private func setupScrollView(){
+       
+        scrollView.contentInset = .init(top: 10, left: 0, bottom: 0, right: 0)
+        scrollView.delegate = self
+        scrollView.setContentOffset(.zero, animated: false)
+        scrollView.bounces = false
+       
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
+        
         scrollView.frame = view.bounds
         contentView.frame = scrollView.bounds
-        scrollView.contentSize = contentView.frame.size
+        
+        scrollView.contentSize = CGSize(width: contentView.frame.width, height: contentView.frame.height)
+        
     }
     
-    private func setupRefreshControl(){
-        scrollView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
-    }
+//    private func setupRefreshControl(){
+//        //scrollView.refreshControl = refreshControl
+//        //refreshControl.addTarget(self, action: #selector(didPullToRefresh), for: .valueChanged)
+//    }
     
     private func startLocationManager(){
         locationManager.requestWhenInUseAuthorization()
@@ -261,7 +270,7 @@ class WeatherViewController: UIViewController {
     }
     
     private func windOfBrick(windSpeed: Double){
-        if windSpeed > 5 {
+        if windSpeed > 6 {
             UIView.animate(withDuration: 3, delay: 1.5, options: [.repeat, .autoreverse, .curveEaseInOut]) {
                 self.imageViewBrickOnRope.transform = CGAffineTransformMakeRotation(CGFloat(0.3))
             }
@@ -285,5 +294,30 @@ extension WeatherViewController: CLLocationManagerDelegate {
     }
 }
 
+extension WeatherViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(scrollView.contentOffset, "offset")
+        if scrollView.contentOffset.y == -10 {
+            print("vozvrat scrolla")
+            //print(scrollView.contentOffset, "offset")
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            print("fin + end")
+        }
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        print("endeeeeed")
+        scrollView.setContentOffset(.zero, animated: true)
+    }
 
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print("Start")
+        refreshWeather()
+    }
+    
+}
 
