@@ -13,13 +13,13 @@ class InfoView: UIView {
     private var cornerRadius: CGFloat = 25.0
     private var fillColor: UIColor = .blue
     
-    let color = #colorLiteral(red: 0.5763047668, green: 0.2355876396, blue: 0.05401653666, alpha: 1)
-    let imageView = UIImageView()
-    let firstView = UIView()
-    let containerView = UIView()
-    let closeButton = UIButton()
+    private let color = #colorLiteral(red: 0.5763047668, green: 0.2355876396, blue: 0.05401653666, alpha: 1)
+    private let imageView = UIImageView()
+    private let firstView = UIView()
+    private let containerView = UIView()
+    private let closeButton = UIButton()
     
-    let infoLabel: UILabel = {
+    private let infoLabel: UILabel = {
        let label = UILabel()
         label.font = .systemFont(ofSize: 24)
         label.text = "INFO"
@@ -27,7 +27,7 @@ class InfoView: UIView {
         return label
     }()
     
-    let textInfoLabel: UILabel = {
+    private let textInfoLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18)
         label.text = """
@@ -50,7 +50,7 @@ class InfoView: UIView {
         return label
     }()
     
-    lazy var stack: UIStackView = {
+    lazy var infoViewStack: UIStackView = {
        let stack = UIStackView(arrangedSubviews: [infoLabel,textInfoLabel])
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
@@ -74,7 +74,7 @@ class InfoView: UIView {
         
         addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(stack)
+        containerView.addSubview(infoViewStack)
         containerView.backgroundColor = .systemOrange
         containerView.addShadow(cornerRadius: 25 ,offset: CGSize(width: 5, height: 2), color: color, radius: 1, opacity: 1)
     }
@@ -112,30 +112,9 @@ class InfoView: UIView {
             closeButton.widthAnchor.constraint(equalToConstant: 150),
             closeButton.heightAnchor.constraint(equalToConstant: 40),
             
-            stack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            stack.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
-            stack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
+            infoViewStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            infoViewStack.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10),
+            infoViewStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20)
         ])
-    }
-}
-
-extension UIView {
-   
-    func addShadow(cornerRadius: CGFloat, offset: CGSize, color: UIColor, radius: CGFloat, opacity: Float) {
-        layer.cornerRadius = cornerRadius
-        layer.shadowColor = color.cgColor
-        layer.shadowOffset = offset
-        layer.shadowOpacity = opacity
-        layer.shadowRadius = radius
-        layer.masksToBounds = false
-    }
-    
-    func setShadowWithCornerRadius(cornerRadius: CGFloat, shadowColor: UIColor, shadowOffset: CGSize, shadoeOpacity: Float = 1, shadowRadius: CGFloat = 15){
-        layer.cornerRadius = cornerRadius
-        layer.shadowColor = shadowColor.cgColor
-        layer.shadowOffset = shadowOffset
-        layer.shadowOpacity = shadoeOpacity
-        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
-        layer.shadowRadius = shadowRadius
     }
 }

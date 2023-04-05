@@ -19,7 +19,7 @@ struct Wind: Codable {
     var speed: Double = 0.0
 }
 
-struct Sys: Codable {
+struct SystemInfoWeather: Codable {
     let country: String
 }
 
@@ -28,10 +28,10 @@ struct WeatherData: Codable {
     var main: Main = Main()
     var name: String = ""
     var wind: Wind = Wind()
-    let sys: Sys
+    let sys: SystemInfoWeather
 }
 
-struct FinalWeather {
+struct WeatherModel {
     
     var nameCity: String
     var temperature: String

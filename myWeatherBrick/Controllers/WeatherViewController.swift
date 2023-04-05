@@ -16,7 +16,7 @@ class WeatherViewController: UIViewController {
     private let gpsButton = UIButton()
     private let imageViewBrickOnRope = UIImageView()
 //    private let refreshControl = UIRefreshControl()
-    private var stack = UIStackView()
+    private var buttonLabelStack = UIStackView()
     
     private let cityNameLabel : UILabel = {
         let label = UILabel()
@@ -60,9 +60,8 @@ class WeatherViewController: UIViewController {
         setupView()
         setupViewBrickOnRope()
         startLocationManager()
-//        setupRefreshControl()
         setupActivityIndicator()
-        setupButtom()
+        setupButtoms()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -90,8 +89,8 @@ class WeatherViewController: UIViewController {
             infoButton.widthAnchor.constraint(equalToConstant: 160),
             infoButton.heightAnchor.constraint(equalToConstant: 60),
             
-            stack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            stack.bottomAnchor.constraint(equalTo: infoButton.topAnchor, constant: -15)
+            buttonLabelStack.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            buttonLabelStack.bottomAnchor.constraint(equalTo: infoButton.topAnchor, constant: -15)
         ])
     }
     
@@ -109,14 +108,12 @@ class WeatherViewController: UIViewController {
         let alert = UIAlertController(title: "Find City", message: "Enter city name on English:", preferredStyle: .alert)
        
         let action = UIAlertAction(title: "Find", style: .default) { _ in
-            guard let city = alert.textFields?.first?.text else {return}
-            DispatchQueue.main.async {
-                self.activityIndicator.startAnimating()
-            }
-            self.fetchManager.fetchWeatherForCityName(cityName: city) { weather in
+            guard let cityAlertText = alert.textFields?.first?.text else {return}
+            self.isActivityAnimatingStart(true)
+            self.fetchManager.fetchWeatherForCityName(cityName: cityAlertText) { weather in
                 DispatchQueue.main.async {
                     self.updateView(weather: weather)
-                    self.activityIndicator.stopAnimating()
+                    self.isActivityAnimatingStart(false)
                 }
             }
         }
@@ -136,7 +133,7 @@ class WeatherViewController: UIViewController {
         view.addSubview(infoView)
     }
     
-    private func setupButtom(){
+    private func setupButtoms(){
         contentView.addSubview(infoButton)
         infoButton.layer.cornerRadius = 15
         infoButton.translatesAutoresizingMaskIntoConstraints = false
@@ -164,11 +161,11 @@ class WeatherViewController: UIViewController {
     private func setupStack(){
         let gpsImage = UIImageView(image: UIImage(named: "icon_location"))
         gpsImage.contentMode = .scaleAspectFit
-        stack = UIStackView(arrangedSubviews: [gpsButton,cityNameLabel,findButton])
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .horizontal
-        stack.spacing = 5
-        contentView.addSubview(stack)
+        buttonLabelStack = UIStackView(arrangedSubviews: [gpsButton,cityNameLabel,findButton])
+        buttonLabelStack.translatesAutoresizingMaskIntoConstraints = false
+        buttonLabelStack.axis = .horizontal
+        buttonLabelStack.spacing = 5
+        contentView.addSubview(buttonLabelStack)
     }
     
     private func setupViewBrickOnRope(){
@@ -198,7 +195,6 @@ class WeatherViewController: UIViewController {
         contentView.frame = scrollView.bounds
         
         scrollView.contentSize = CGSize(width: contentView.frame.width, height: contentView.frame.height)
-        
     }
     
 //    private func setupRefreshControl(){
@@ -225,18 +221,35 @@ class WeatherViewController: UIViewController {
     
     private func refreshWeather(){
         guard longitude != 0 else {return}
-        DispatchQueue.main.async {
-            self.activityIndicator.startAnimating()
-        }
+
+        isActivityAnimatingStart(true)
+        
         fetchManager.fetchWeatherForCoordinates(latitude: latitude, longitude: longitude) { weather in
             DispatchQueue.main.async {
                 self.updateView(weather: weather)
-                self.activityIndicator.stopAnimating()
+                self.isActivityAnimatingStart(false)
             }
         }
     }
     
-    private func updateView(weather: FinalWeather?){
+    private func isActivityAnimatingStart(_ animating: Bool){
+        if animating {
+            DispatchQueue.main.async {
+                self.activityIndicator.startAnimating()
+            }
+        } else {
+            self.activityIndicator.stopAnimating()
+        }
+    }
+    
+    private func alertCityNotFound() {
+        let alertNotFound = UIAlertController(title: "City not find", message: "Try input another City\nPlease!", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .cancel)
+        alertNotFound.addAction(action)
+        present(alertNotFound, animated: true)
+    }
+    
+    private func updateView(weather: WeatherModel?){
         if let weather = weather {
             temperatureLabel.text = weather.temperature
             cityNameLabel.text = weather.country + ", " + weather.nameCity
@@ -254,10 +267,7 @@ class WeatherViewController: UIViewController {
             UIView.animate(withDuration: 2, delay: 1) {
                 self.imageViewBrickOnRope.transform = CGAffineTransformMakeRotation(CGFloat(0))
             }
-            let alertNotFound = UIAlertController(title: "City not find", message: "Try input another City\nPlease!", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .cancel)
-            alertNotFound.addAction(action)
-            present(alertNotFound, animated: true)
+            alertCityNotFound()
         }
     }
     
@@ -294,8 +304,19 @@ extension WeatherViewController: CLLocationManagerDelegate {
     }
 }
 
+//MARK: - ScrollView Delegate
+
 extension WeatherViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+   
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        scrollView.setContentOffset(.zero, animated: true)
+    }
+
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        refreshWeather()
+    }
+    
+    /*func scrollViewDidScroll(_ scrollView: UIScrollView) {
         print(scrollView.contentOffset, "offset")
         if scrollView.contentOffset.y == -10 {
             print("vozvrat scrolla")
@@ -307,17 +328,7 @@ extension WeatherViewController: UIScrollViewDelegate {
         if !decelerate {
             print("fin + end")
         }
-    }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        print("endeeeeed")
-        scrollView.setContentOffset(.zero, animated: true)
-    }
-
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        print("Start")
-        refreshWeather()
-    }
+    }*/
     
 }
 
