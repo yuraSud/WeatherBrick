@@ -1,0 +1,36 @@
+{
+    "coord":{"lon":30.5167,"lat":50.4333},
+    "weather":[{
+        "id":804,
+        "main":"Clouds",
+        "description":"хмарно",
+        "icon":"04d"
+        }],
+    "base":"stations",
+    "main":{
+        "temp":20,
+        "feels_like":13.24,
+        "temp_min":14.29,
+        "temp_max":14.29,
+        "pressure":1018,
+        "humidity":56
+    },
+    "visibility":10000,
+    "wind":{
+        "speed":0.45,
+        "deg":22,
+        "gust":1.79},
+    "clouds":{
+        "all":100},
+    "dt":1680877681,
+    "sys":{
+        "type":2,
+        "id":2003742,
+        "country":"UA",
+        "sunrise":1680837725,
+        "sunset":1680885474},
+    "timezone":10800,
+    "id":703448,
+    "name":"Kyiv",
+    "cod":200
+}

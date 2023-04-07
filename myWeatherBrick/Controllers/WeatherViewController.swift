@@ -5,7 +5,17 @@ import CoreLocation
 
 class WeatherViewController: UIViewController {
     
-    private let fetchManager = FetchWeatherManager()
+    var fetchManager: WeatherFetchingProtocol? //FetchWeatherManager()
+    
+    init(fetchManager: WeatherFetchingProtocol){
+        self.fetchManager = fetchManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+            super.init(coder: aDecoder)
+        }
+    
     private let locationManager = CLLocationManager()
     private let backgroundImageView = UIImageView()
     private let scrollView = UIScrollView()
@@ -51,7 +61,7 @@ class WeatherViewController: UIViewController {
     }()
     
     private var latitude: Double = 0
-    private var longitude: Double = 0
+    var longitude: Double = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,7 +120,7 @@ class WeatherViewController: UIViewController {
         let action = UIAlertAction(title: "Find", style: .default) { _ in
             guard let cityAlertText = alert.textFields?.first?.text else {return}
             self.isActivityAnimatingStart(true)
-            self.fetchManager.fetchWeatherForCityName(cityName: cityAlertText) { weather in
+            self.fetchManager?.fetchWeatherForCityName(cityName: cityAlertText) { weather in
                 DispatchQueue.main.async {
                     self.updateView(weather: weather)
                     self.isActivityAnimatingStart(false)
@@ -219,12 +229,12 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    private func refreshWeather(){
+    func refreshWeather(){
         guard longitude != 0 else {return}
 
         isActivityAnimatingStart(true)
         
-        fetchManager.fetchWeatherForCoordinates(latitude: latitude, longitude: longitude) { weather in
+        fetchManager?.fetchWeatherForCoordinates(latitude: latitude, longitude: longitude) { weather in
             DispatchQueue.main.async {
                 self.updateView(weather: weather)
                 self.isActivityAnimatingStart(false)

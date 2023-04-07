@@ -1,0 +1,44 @@
+{"coord":{
+    "lon":2.3488,
+    "lat":48.8534},
+   
+   "weather":[{
+        "id":803,
+        "main":"Clouds",
+        "description":"рвані хмари",
+        "icon":"04d"
+    }],
+   
+   "base":"stations",
+    
+    "main":{
+        "temp":14,
+        "feels_like":12.63,
+        "temp_min":12.77,
+        "temp_max":15.76,
+        "pressure":1019,
+        "humidity":52},
+    
+    "visibility":10000,
+    
+    "wind":{
+        "speed":6.17,
+        "deg":10},
+    
+    "clouds":{
+        "all":75},
+    
+    "dt":1680879002,
+    
+    "sys":{
+        "type":2,
+        "id":2041230,
+        "country":"FR",
+        "sunrise":1680844593,
+        "sunset":1680892124},
+    
+    "timezone":7200,
+    "id":2988507,
+    "name":"Paris",
+    "cod":200
+}

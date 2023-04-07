@@ -1,7 +1,15 @@
 
 import Foundation
 
-struct FetchWeatherManager {
+protocol WeatherFetchingProtocol {
+    
+    func fetchWeatherForCoordinates(latitude: Double, longitude: Double, completionhandler: @escaping (WeatherModel?)->())
+    
+    func fetchWeatherForCityName(cityName: String, completionhandler: @escaping (WeatherModel?)->())
+}
+
+
+struct FetchWeatherManager: WeatherFetchingProtocol {
     
     func fetchWeatherForCoordinates(latitude: Double, longitude: Double, completionhandler: @escaping (WeatherModel?)->()){
         
@@ -13,7 +21,7 @@ struct FetchWeatherManager {
         let task = session.dataTask(with: url) { (data, response, error) in
             
             guard error == nil, let data = data else {
-                print("___Data Task = \(String(describing: error?.localizedDescription))")
+                
                 DispatchQueue.global().asyncAfter(deadline: .now() + 3){
                     completionhandler(nil)
                 }
@@ -21,7 +29,7 @@ struct FetchWeatherManager {
             }
             if let response = response as? HTTPURLResponse,
                !(200...299).contains(response.statusCode) {
-                print("Response error code = \(response.statusCode)")
+               
                 completionhandler(nil)
             }
             if let weather = parseJSON(data: data) {
@@ -40,16 +48,15 @@ struct FetchWeatherManager {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             guard error == nil, let data = data else {
-                print(error?.localizedDescription ?? "")
                 completionhandler(nil)
                 return
             }
             
             if let response = response as? HTTPURLResponse,
                !(200...299).contains(response.statusCode) {
-                print(response.statusCode)
                 completionhandler(nil)
             }
+            
             if let weather = parseJSON(data: data) {
                 completionhandler(weather)
             }
@@ -57,7 +64,7 @@ struct FetchWeatherManager {
         task.resume()
     }
     
-    func parseJSON(data: Data) -> WeatherModel? {
+    private func parseJSON(data: Data) -> WeatherModel? {
         
         do{
             let weatherData = try JSONDecoder().decode(WeatherData.self, from: data)
