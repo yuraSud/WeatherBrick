@@ -21,14 +21,14 @@ class WeatherViewController: UIViewController {
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let activityIndicator = UIActivityIndicatorView()
-    private let infoButton = UIButton()
-    private let findButton = UIButton()
+     let infoButton = UIButton()
+     let findButton = UIButton()
     private let gpsButton = UIButton()
-    private let imageViewBrickOnRope = UIImageView()
+     let imageViewBrickOnRope = UIImageView()
 //    private let refreshControl = UIRefreshControl()
     private var buttonLabelStack = UIStackView()
     
-    private let cityNameLabel : UILabel = {
+     let cityNameLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 22)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -36,10 +36,11 @@ class WeatherViewController: UIViewController {
         return label
     }()
     
-    private let temperatureLabel : UILabel = {
+     let temperatureLabel : UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 60)
         label.textAlignment = .right
+         label.text = "12"
         label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -61,7 +62,7 @@ class WeatherViewController: UIViewController {
     }()
     
     private var latitude: Double = 0
-    var longitude: Double = 0
+    var longitude: Double = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +73,7 @@ class WeatherViewController: UIViewController {
         startLocationManager()
         setupActivityIndicator()
         setupButtoms()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -182,7 +184,7 @@ class WeatherViewController: UIViewController {
         contentView.addSubview(imageViewBrickOnRope)
         imageViewBrickOnRope.frame = CGRect(x: 0, y: 10, width: view.frame.width, height: view.frame.height/2.5)
         imageViewBrickOnRope.contentMode = .scaleAspectFit
-        imageViewBrickOnRope.image = UIImage()
+        imageViewBrickOnRope.image = UIImage(named: "image_without_stone_")
     }
     
     private func setupActivityIndicator(){
@@ -252,7 +254,7 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    private func alertCityNotFound() {
+     func alertCityNotFound() {
         let alertNotFound = UIAlertController(title: "City not find", message: "Try input another City\nPlease!", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .cancel)
         alertNotFound.addAction(action)

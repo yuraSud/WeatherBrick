@@ -12,6 +12,8 @@
 		4375979F29E05E4F0032566F /* MockFetchWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4375979D29E05DD40032566F /* MockFetchWeather.swift */; };
 		437597A129E05E970032566F /* MockKyiv.json in Resources */ = {isa = PBXBuildFile; fileRef = 437597A029E05E970032566F /* MockKyiv.json */; };
 		437597A629E068110032566F /* MockParis.json in Resources */ = {isa = PBXBuildFile; fileRef = 437597A529E068110032566F /* MockParis.json */; };
+		437597AF29E300F80032566F /* myWeatherBrickSnapShotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 437597AE29E300F80032566F /* myWeatherBrickSnapShotTests.swift */; };
+		437597B729E301E90032566F /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 437597B629E301E90032566F /* SnapshotTesting */; };
 		438F0B1029BDD0850023B654 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438F0B0F29BDD0850023B654 /* InfoView.swift */; };
 		4390C09B29BBB36B0013A23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390C09A29BBB36B0013A23C /* AppDelegate.swift */; };
 		4390C09D29BBB36B0013A23C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4390C09C29BBB36B0013A23C /* SceneDelegate.swift */; };
@@ -28,6 +30,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		437597B029E300F80032566F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4390C08F29BBB36B0013A23C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4390C09629BBB36B0013A23C;
+			remoteInfo = myWeatherBrick;
+		};
 		4390C0AE29BBB3740013A23C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4390C08F29BBB36B0013A23C /* Project object */;
@@ -50,6 +59,8 @@
 		4375979D29E05DD40032566F /* MockFetchWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchWeather.swift; sourceTree = "<group>"; };
 		437597A029E05E970032566F /* MockKyiv.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MockKyiv.json; sourceTree = "<group>"; };
 		437597A529E068110032566F /* MockParis.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = MockParis.json; sourceTree = "<group>"; };
+		437597AC29E300F70032566F /* myWeatherBrickSnapShotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myWeatherBrickSnapShotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		437597AE29E300F80032566F /* myWeatherBrickSnapShotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myWeatherBrickSnapShotTests.swift; sourceTree = "<group>"; };
 		438F0B0F29BDD0850023B654 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		4390C09729BBB36B0013A23C /* myWeatherBrick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myWeatherBrick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4390C09A29BBB36B0013A23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +81,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		437597A929E300F70032566F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				437597B729E301E90032566F /* SnapshotTesting in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4390C09429BBB36B0013A23C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -138,11 +157,20 @@
 			path = Mock;
 			sourceTree = "<group>";
 		};
+		437597AD29E300F80032566F /* myWeatherBrickSnapShotTests */ = {
+			isa = PBXGroup;
+			children = (
+				437597AE29E300F80032566F /* myWeatherBrickSnapShotTests.swift */,
+			);
+			path = myWeatherBrickSnapShotTests;
+			sourceTree = "<group>";
+		};
 		4390C08E29BBB36B0013A23C = {
 			isa = PBXGroup;
 			children = (
 				4390C09929BBB36B0013A23C /* myWeatherBrick */,
 				4390C0B029BBB3740013A23C /* myWeatherBrickTests */,
+				437597AD29E300F80032566F /* myWeatherBrickSnapShotTests */,
 				4390C0BA29BBB3740013A23C /* myWeatherBrickUITests */,
 				4390C09829BBB36B0013A23C /* Products */,
 			);
@@ -154,6 +182,7 @@
 				4390C09729BBB36B0013A23C /* myWeatherBrick.app */,
 				4390C0AD29BBB3740013A23C /* myWeatherBrickTests.xctest */,
 				4390C0B729BBB3740013A23C /* myWeatherBrickUITests.xctest */,
+				437597AC29E300F70032566F /* myWeatherBrickSnapShotTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -166,6 +195,7 @@
 				43E793FF29BF10F5000CDC54 /* View */,
 				430EB18529D1E24C0004163E /* Controllers */,
 				4330AAD129BCF52E002EDCC9 /* Weather Managers */,
+				437597A729E069A80032566F /* Mock */,
 				4390C0CA29BBB4F50013A23C /* support */,
 			);
 			path = myWeatherBrick;
@@ -174,7 +204,6 @@
 		4390C0B029BBB3740013A23C /* myWeatherBrickTests */ = {
 			isa = PBXGroup;
 			children = (
-				437597A729E069A80032566F /* Mock */,
 				4390C0B129BBB3740013A23C /* myWeatherBrickTests.swift */,
 			);
 			path = myWeatherBrickTests;
@@ -221,6 +250,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		437597AB29E300F70032566F /* myWeatherBrickSnapShotTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 437597B229E300F80032566F /* Build configuration list for PBXNativeTarget "myWeatherBrickSnapShotTests" */;
+			buildPhases = (
+				437597A829E300F70032566F /* Sources */,
+				437597A929E300F70032566F /* Frameworks */,
+				437597AA29E300F70032566F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				437597B129E300F80032566F /* PBXTargetDependency */,
+			);
+			name = myWeatherBrickSnapShotTests;
+			packageProductDependencies = (
+				437597B629E301E90032566F /* SnapshotTesting */,
+			);
+			productName = myWeatherBrickSnapShotTests;
+			productReference = 437597AC29E300F70032566F /* myWeatherBrickSnapShotTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4390C09629BBB36B0013A23C /* myWeatherBrick */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4390C0C129BBB3740013A23C /* Build configuration list for PBXNativeTarget "myWeatherBrick" */;
@@ -284,6 +334,10 @@
 				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1410;
 				TargetAttributes = {
+					437597AB29E300F70032566F = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 4390C09629BBB36B0013A23C;
+					};
 					4390C09629BBB36B0013A23C = {
 						CreatedOnToolsVersion = 14.1;
 					};
@@ -306,18 +360,29 @@
 				Base,
 			);
 			mainGroup = 4390C08E29BBB36B0013A23C;
+			packageReferences = (
+				437597B529E301E90032566F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+			);
 			productRefGroup = 4390C09829BBB36B0013A23C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				4390C09629BBB36B0013A23C /* myWeatherBrick */,
 				4390C0AC29BBB3740013A23C /* myWeatherBrickTests */,
+				437597AB29E300F70032566F /* myWeatherBrickSnapShotTests */,
 				4390C0B629BBB3740013A23C /* myWeatherBrickUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		437597AA29E300F70032566F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4390C09529BBB36B0013A23C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -349,6 +414,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		437597A829E300F70032566F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				437597AF29E300F80032566F /* myWeatherBrickSnapShotTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4390C09329BBB36B0013A23C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -384,6 +457,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		437597B129E300F80032566F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4390C09629BBB36B0013A23C /* myWeatherBrick */;
+			targetProxy = 437597B029E300F80032566F /* PBXContainerItemProxy */;
+		};
 		4390C0AF29BBB3740013A23C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4390C09629BBB36B0013A23C /* myWeatherBrick */;
@@ -416,6 +494,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		437597B329E300F80032566F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GL9MDKA2Z4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = SudHome.myWeatherBrickSnapShotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/myWeatherBrick.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/myWeatherBrick";
+			};
+			name = Debug;
+		};
+		437597B429E300F80032566F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GL9MDKA2Z4;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = SudHome.myWeatherBrickSnapShotTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/myWeatherBrick.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/myWeatherBrick";
+			};
+			name = Release;
+		};
 		4390C0BF29BBB3740013A23C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -665,6 +781,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		437597B229E300F80032566F /* Build configuration list for PBXNativeTarget "myWeatherBrickSnapShotTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				437597B329E300F80032566F /* Debug */,
+				437597B429E300F80032566F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4390C09229BBB36B0013A23C /* Build configuration list for PBXProject "myWeatherBrick" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -702,6 +827,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		437597B529E301E90032566F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		437597B629E301E90032566F /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 437597B529E301E90032566F /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4390C08F29BBB36B0013A23C /* Project object */;
 }

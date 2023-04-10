@@ -29,4 +29,6 @@ final class myWeatherBrickUITestsLaunchTests: XCTestCase {
         attachment.lifetime = .keepAlways
         add(attachment)
     }
+    
 }
+

@@ -48,6 +48,16 @@
                ReferencedContainer = "container:myWeatherBrick.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "437597AB29E300F70032566F"
+               BuildableName = "myWeatherBrickSnapShotTests.xctest"
+               BlueprintName = "myWeatherBrickSnapShotTests"
+               ReferencedContainer = "container:myWeatherBrick.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -16,10 +16,10 @@ class MockFetchWeather : WeatherFetchingProtocol {
             guard let weatherModel = WeatherModel(weatherData: weatherData) else { return }
             print("123")
            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            //DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 completionhandler(weatherModel)
-                print("456")
-            }
+              //  print("456")
+           // }
             print("789")
             
         } catch let error as NSError {

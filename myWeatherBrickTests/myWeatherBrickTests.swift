@@ -1,9 +1,4 @@
-//
-//  myWeatherBrickTests.swift
-//  myWeatherBrickTests
-//
-//  Created by YURA																			 on 10.03.2023.
-//
+
 
 import XCTest
 @testable import myWeatherBrick
@@ -11,6 +6,7 @@ import XCTest
 final class myWeatherBrickTests: XCTestCase {
     
     let weatherBrick = WeatherViewController(fetchManager: MockFetchWeather())
+    
     
     func testWeatherForCityName() async throws {
         
@@ -36,7 +32,7 @@ final class myWeatherBrickTests: XCTestCase {
             expectation.fulfill()
         })
         
-        XCTAssertNil(weatherDat)
+        XCTAssertNotNil(weatherDat)
         
         waitForExpectations(timeout: 15)
         // wait(for: [expectation], timeout: 5)
