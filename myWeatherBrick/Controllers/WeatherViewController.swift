@@ -5,16 +5,16 @@ import CoreLocation
 
 class WeatherViewController: UIViewController {
     
-    var fetchManager: WeatherFetchingProtocol? //FetchWeatherManager()
+    var fetchManager: WeatherFetchingProtocol? = FetchWeatherManager()
     
-    init(fetchManager: WeatherFetchingProtocol){
-        self.fetchManager = fetchManager
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-            super.init(coder: aDecoder)
-        }
+//    init(fetchManager: WeatherFetchingProtocol){
+//        self.fetchManager = fetchManager
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//            super.init(coder: aDecoder)
+//        }
     
     private let locationManager = CLLocationManager()
     private let backgroundImageView = UIImageView()
@@ -62,7 +62,7 @@ class WeatherViewController: UIViewController {
     }()
     
     private var latitude: Double = 0
-    var longitude: Double = 1
+    var longitude: Double = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -8,9 +8,10 @@ final class myWeatherBrickSnapShotTests: XCTestCase {
     var vc : WeatherViewController!
     
     override func setUp() {
-        vc = WeatherViewController(fetchManager: MockFetchWeather())
-        //isRecording = true
+        vc = WeatherViewController()
+        vc.fetchManager = MockFetchWeather()
     }
+    
     override func tearDown() {
         vc = nil
     }

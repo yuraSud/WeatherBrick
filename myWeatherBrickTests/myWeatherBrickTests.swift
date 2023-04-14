@@ -5,8 +5,12 @@ import XCTest
 
 final class myWeatherBrickTests: XCTestCase {
     
-    let weatherBrick = WeatherViewController(fetchManager: MockFetchWeather())
+    var weatherBrick: WeatherViewController!
     
+    override func setUp() {
+        weatherBrick = WeatherViewController()
+        weatherBrick.fetchManager = MockFetchWeather()
+    }
     
     func testWeatherForCityName() async throws {
         
